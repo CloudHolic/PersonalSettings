@@ -6,10 +6,10 @@ Put each files at the correct place for restore settings.
 
 ### Windows
 
-- .wezterm.lua - C:\Users\(UserName)\.wezterm.lua
-- starship.toml - C:\Users\(UserName)\.config\starship.toml
+- .wezterm.lua - C:\Users\\(UserName)\\.wezterm.lua
+- starship.toml - C:\Users\\(UserName)\\.config\starship.toml
 - Microsoft.PowerShell_profile.ps1 - $PROFILE
-- init.lua - C:\Users\(UserName)\AppData\Local\nvim\init.lua
+- init.lua - C:\Users\\(UserName)\\AppData\Local\nvim\init.lua
 
 ### WSL2
 
