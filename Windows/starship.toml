@@ -1,0 +1,83 @@
+format = """
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$nodejs\
+$conda\
+$docker_context\
+$kubernetes\
+$cmd_duration\
+$character"""
+
+[username]
+disabled = true
+
+[hostname]
+ssh_only = true
+style = "green bold"
+format = "[$user@$hostname]($style) in "
+
+[directory]
+style = "cyan bold"
+format = "[$path]($style) "
+truncation_length = 0
+truncate_to_repo = false
+home_symbol = "~"
+
+[directory.substitutions]
+"~" = "C:\\Users\\cloud"
+
+[git_branch]
+symbol = " "
+style = "purple bold"
+format = "[$symbol$branch]($style)"
+
+[git_status]
+style = "red bold"
+format = '([$all_status$ahead_behind]($style)) '
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+modified = "!${count}"
+staged = "+${count}"
+deleted = "✘${count}"
+
+[python]
+symbol = " "
+style = "yellow bold"
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+detect_extensions = []
+
+[nodejs]
+symbol = " "
+style = "green bold"
+format = "[$symbol($version )]($style)"
+detect_files = ["package.json", ".node-version"]
+
+[conda]
+symbol = " "
+style = "green bold"
+format = "[$symbol$environment ]($style)"
+
+[docker_context]
+symbol = " "
+style = "blue bold"
+format = "[$symbol$context ]($style)"
+only_with_files = true
+
+[kubernetes]
+symbol = "☸ "
+disabled = false
+format = "on [$symbol$context( ($namespace))]($style) "
+
+[cmd_duration]
+min_time = 2000
+style = "yellow bold"
+format = "[⏱ $duration]($style) "
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
