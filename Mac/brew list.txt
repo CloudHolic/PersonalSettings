@@ -1,0 +1,4 @@
+
+brew install git gh curl wget
+
+Brew install starship eza bat fzf ripgrepzoxide neovim lazygit btop

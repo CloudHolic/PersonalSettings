@@ -23,6 +23,9 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # Starship
 eval "$(starship init zsh)"
 
@@ -34,6 +37,9 @@ zinit light Aloxaf/fzf-tab
 
 # Zoxide
 eval "$(zoxide init zsh)"
+
+# mise
+eval "$(mise activate zsh)"
 
 # Basic options
 setopt AUTO_CD
@@ -68,16 +74,15 @@ alias gb='git branch'
 alias gd='git diff'
 alias glog='git log --oneline --graph --decorate --all'
 
+# For MAC only
+alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder'
+alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder'
+alias update='brew update && brew upgrade && brew cleanup'
+
 # Move directory
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-
-# System
-alias update='sudo pacman -Syu'
-alias install='sudo pacman -S'
-alias remove='sudo pacman -Rs'
-alias search='pacman -Ss'
 
 # Env
 export EDITOR=nvim
@@ -117,44 +122,3 @@ bindkey '^[d' kill-word                 # Alt+D
 alias sudo='sudo '
 alias svim='sudoedit'
 alias sedit='sudoedit'
-
-# Dev Env
-
-# .NET
-_dotnet_zsh_complete() {
-    local completions=("$(dotnet complete "$words")")
-    reply=( "${(ps:\n:)completions}" )
-}
-compctl -K _dotnet_zsh_complete dotnet
-
-# Haskell
-[ -f "/home/cloudholic/.ghcup/env" ] && . "/home/cloudholic/.ghcup/env" # ghcup-env
-
-# Python
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-. "$HOME/.local/bin/env"
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# bun completions
-[ -s "/home/cloudholic/.bun/_bun" ] && source "/home/cloudholic/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Rust
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# Ruby
-export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
-
-# Ruby(rvenv)
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
