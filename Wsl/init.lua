@@ -258,13 +258,11 @@ require("lazy").setup({
         "neovim/nvim-lspconfig",
         event = { "BufReadPost", "BufNewFile" },
         config = function()
-            local lspconfig = require("lspconfig")
-
-            lspconfig.clangd.setup{}
-            lspconfig.pylsp.setup{}
-            lspconfig.tsserver.setup{}
-            lspconfig.rust_analyzer.setup{}
-            lspconfig.bashls.setup{}
+            vim.lsp.config('clangd', {})
+            vim.lsp.config('pylsp', {})
+            vim.lsp.config('ts_ls', {})
+            vim.lsp.config('rust_analyzer', {})
+            vim.lsp.config('bashls', {})
 
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover)

@@ -1,4 +1,3 @@
-
-brew install git gh curl wget
+brew install git gh curl wget mise
 
 Brew install starship eza bat fzf ripgrepzoxide neovim lazygit btop
