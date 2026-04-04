@@ -1,19 +1,32 @@
 # PersonalSettings
 
-My personal terminal + TUI/CLI settings for Windows & Wsl2 (Arch).
+My personal terminal + TUI/CLI settings for Windows, WSL2, Mac, and Linux.
 
-Put each files at the correct place for restore settings.
 
-### Windows
+## Windows
 
-- .wezterm.lua - C:\Users\\(UserName)\\.wezterm.lua
-- starship.toml - C:\Users\\(UserName)\\.config\starship.toml
-- Microsoft.PowerShell_profile.ps1 - $PROFILE
-- init.lua - C:\Users\\(UserName)\\AppData\Local\nvim\init.lua
+- nushell (main) 
+- PowerShell (sub)
+- nvim
+- starship
+- wezterm
 
-### WSL2
+## Mac
 
-- .zshrc - ~/.zshrc
-- starship.toml - ~/.config/starship.toml
-- init.lua - ~/.config/nvim/init.lua
+- zsh (main)
+- nushell (sub)
+- nvim
+- starship
+- wezterm
 
+## WSL (Arch)
+
+- zsh
+- nvim
+- starship
+
+## Linux (Ubuntu)
+
+- zsh
+- nvim
+- starship

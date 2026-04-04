@@ -33,7 +33,7 @@ function sysinfo {
 	Write-Host "OS: " -NoNewline -ForegroundColor Cyan
 	(Get-CimInstance Win32_OperatingSystem).Caption
 	Write-Host "CPU: " -NoNewline -ForegroundColor Cyan
-	(Get-CimInstnace Win32_Processor).Name
+	(Get-CimInstance Win32_Processor).Name
 	Write-Host "RAM: " -NoNewline -ForegroundColor Cyan
 	"{0:N2} GB" -f ((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB)
 }
@@ -56,3 +56,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+t -ScriptBlock { search-fzf-file }
 Set-Alias vi nvim
 Set-Alias vim nvim
 $env:EDITOR = "nvim"
+#f45873b3-b655-43a6-b217-97c00aa0db58 PowerToys CommandNotFound module
+
+Import-Module -Name Microsoft.WinGet.CommandNotFound
+#f45873b3-b655-43a6-b217-97c00aa0db58

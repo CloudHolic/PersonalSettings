@@ -3,11 +3,6 @@ $hostname\
 $directory\
 $git_branch\
 $git_status\
-$python\
-$nodejs\
-$conda\
-$docker_context\
-$kubernetes\
 $cmd_duration\
 $character"""
 
@@ -17,7 +12,7 @@ disabled = true
 [hostname]
 ssh_only = true
 style = "green bold"
-format = "[$user@$hostname]($style) in "
+format = "[$user@$hostname]($style) "
 
 [directory]
 style = "cyan bold"
@@ -44,34 +39,6 @@ untracked = "?${count}"
 modified = "!${count}"
 staged = "+${count}"
 deleted = "✘${count}"
-
-[python]
-symbol = " "
-style = "yellow bold"
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-detect_extensions = []
-
-[nodejs]
-symbol = " "
-style = "green bold"
-format = "[$symbol($version )]($style)"
-detect_files = ["package.json", ".node-version"]
-
-[conda]
-symbol = " "
-style = "green bold"
-format = "[$symbol$environment ]($style)"
-
-[docker_context]
-symbol = " "
-style = "blue bold"
-format = "[$symbol$context ]($style)"
-only_with_files = true
-
-[kubernetes]
-symbol = "☸ "
-disabled = false
-format = "on [$symbol$context( ($namespace))]($style) "
 
 [cmd_duration]
 min_time = 2000

@@ -1,3 +1,9 @@
+# Nushell
+winget install nushell
+
+# C Compiler
+winget install zig.zig
+
 # Prompt theme
 winget install Starship.Starship
 
@@ -14,7 +20,7 @@ winget install ajeetdsouza.zoxide		# cd Alternative
 # Editor
 winget install Neovim.Neovim
 
-#git TUI
+# git TUI
 winget install JesseDuffield.lazygit
 
 # System monitor

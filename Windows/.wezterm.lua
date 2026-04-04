@@ -5,9 +5,9 @@ local config = wezterm.config_builder()
 -- Launcher Items
 local launch_items = {
     {
-        label = '  PowerShell7.5',
-        display = '1.   PowerShell 7.5',
-        args = { 'pwsh.exe' }
+        label = '󰥭 NuShell',
+        display = '1. 󰥭 NuShell',
+        args = { 'nu.exe' }
     },
     {
         label = '  Arch',
@@ -15,24 +15,24 @@ local launch_items = {
         args = { 'wsl.exe', '-d', 'Arch', '--cd', '~' }
     },
     {
+        label = '  Host',
+        display = '3.   Host SSH',
+        args = { 'wsl.exe', '-d', 'Arch', '--', 'ssh', 'cloudholic@100.77.188.38' }
+    },    
+    {
+        label = '  PowerShell7.6',
+        display = '4.   PowerShell 7.6',
+        args = { 'pwsh.exe' }
+    },
+    {
         label = '  Kali',
-        display = '3.   Kali Linux',
+        display = '5.   Kali Linux',
         args = { 'wsl.exe', '-d', 'kali-linux', '--cd', '~'}
     },
     {
         label = '  Win-KeX',
-        display = '4.   Kali Linux (Win-KeX)',
+        display = '6.   Kali Linux (Win-KeX)',
         args = { 'wsl.exe', '-d', 'kali-linux', '--cd', '~', 'kex', '--wtstart', '-s'}
-    },
-    {
-        label = '  PowerShell5.1',
-        display = '5.   PowerShell 5.1',
-        args = { 'PowerShell.exe' }
-    },
-    {
-        label = '  CMD',
-        display = '6.   CMD',
-        args = { 'cmd.exe' }
     }
 }
 local default_prog_label = launch_items[1].label
@@ -43,15 +43,15 @@ config.initial_rows = 35
 
 -- Fonts
 config.font = wezterm.font_with_fallback({
-    'D2CodingLigature Nerd Font',
-    'D2Coding',
+    'ComicShannsMono Nerd Font',
+    'Comic Mono',
 })
 config.font_size = 11.0
 
 -- Opacity & Backdrop
 config.window_background_opacity = 0.85
 config.win32_system_backdrop = 'Acrylic'
-config.color_scheme = 'MaterialDarker'
+config.color_scheme = 'OneDark (base16)'
 
 -- Styling
 config.use_fancy_tab_bar = true
@@ -62,7 +62,7 @@ config.hide_tab_bar_if_only_one_tab = false
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 config.window_frame = {
-    font = wezterm.font({ family = 'D2CodingLigature Nerd Font', weight = 'Bold' }),
+    font = wezterm.font({ family = 'ComicShannsMono Nerd Font', weight = 'Bold' }),
     font_size = 12.0,
     active_titlebar_bg = '#2e3440',
     inactive_titlebar_bg = '#3b4252'
@@ -163,7 +163,7 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
 end)
 
 -- Default program
-config.default_prog = { 'pwsh.exe' }
+config.default_prog = { 'nu.exe' }
 
 -- Custom launcher menu
 local function custom_launcher(window, pane)
@@ -272,7 +272,7 @@ config.keys = {
         action = act.SendKey({ key = '`' }),
     },
 
-    -- LEADER + 1~6 = Spawn each profiles
+    -- LEADER + 1~5 = Spawn each profiles
     {
         key = '1',
         mods = 'LEADER',
@@ -327,7 +327,7 @@ config.keys = {
             })
             tab_labels[tab:tab_id()] = item.label
         end),
-    },    
+    },
     {
         key = '6',
         mods = 'LEADER',
@@ -472,7 +472,7 @@ config.keys = {
     {
         key = 'W',
         mods = 'LEADER',
-        action = act.CloseCurrentPane({ confirm = false })
+        action = act.CloseCurrentPane({ confirm = true })
     },
 
     -- LEADER + Z = Toggle panel zoom
@@ -554,5 +554,9 @@ end)
 config.scrollback_lines = 10000
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
 config.audible_bell = 'Disabled'
+
+-- Update
+config.check_for_updates = true
+config.check_for_updates_interval_seconds = 86400
 
 return config

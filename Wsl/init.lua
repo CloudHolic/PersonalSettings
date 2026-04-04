@@ -2,7 +2,7 @@ local opt = vim.opt
 
 -- Line number
 opt.number = true
-opt.relativenumber = true
+opt.relativenumber = false
 
 -- Tab/Indent
 opt.expandtab = true
@@ -172,14 +172,31 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Colorscheme (Material Darker)
+-- nvim-lspconfig
+vim.lsp.enable({ 'clangd', 'pylsp', 'ts_ls', 'rust_analyzer', 'bashls' })
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
+
+-- Lazy Setup
 require("lazy").setup({
     {
-        "marko-cerovac/material.nvim",
+        "navarasu/onedark.nvim",
+        priority = 1000,
         config = function ()
-            vim.g.material_style = "darker"
-            vim.cmd("colorscheme material")
+            require('onedark').setup {
+              style = 'dark'
+            }
+            require('onedark').load()
         end,
+    },
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+          dashboard = { enabled = true },
+        },
     },
     {
         "folke/which-key.nvim",
@@ -252,21 +269,6 @@ require("lazy").setup({
                     },
                 },
             })
-        end,
-    },
-    {
-        "neovim/nvim-lspconfig",
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            vim.lsp.config('clangd', {})
-            vim.lsp.config('pylsp', {})
-            vim.lsp.config('ts_ls', {})
-            vim.lsp.config('rust_analyzer', {})
-            vim.lsp.config('bashls', {})
-
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover)
-            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
         end,
     },
     {
