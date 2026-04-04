@@ -272,7 +272,7 @@ config.keys = {
         action = act.SendKey({ key = '`' }),
     },
 
-    -- LEADER + 1~5 = Spawn each profiles
+    -- LEADER + 1~6 = Spawn each profiles
     {
         key = '1',
         mods = 'LEADER',
@@ -340,48 +340,6 @@ config.keys = {
         end),
     },
 
-    -- LEADER + N = New Workspace
-    {
-        key = 'n',
-        mods = 'LEADER',
-        action = wezterm.action_callback(function(window, pane)
-            window:perform_action(
-                act.PromptInputLine({
-                    description = wezterm.format({
-                        { Attribute = { Intensity = 'Bold' } },
-                        { Foreground = { AnsiColor = 'Cyan' } },
-                        { Text = 'New workspace:' },
-                    }),
-                    action = wezterm.action_callback(function(inner_window, inner_pane, line)
-                        if line and line ~= '' then
-                            inner_window:perform_action(
-                                act.SwitchToWorkspace({
-                                    name = line,
-                                }),
-                                inner_pane
-                            )
-                        end
-                    end),
-                }),
-                pane
-            )
-        end),
-    },
-
-    -- LEADER + S = Workspace
-    {
-        key = 's',
-        mods = 'LEADER',
-        action = wezterm.action_callback(function(window, pane)
-            window:perform_action(
-                act.ShowLauncherArgs({
-                    flags = 'FUZZY|WORKSPACES',
-                }),
-                pane
-            )
-        end),
-    },
-
     -- CTRL + SHIFT + L = Open Launcher Menu
     { 
         key = 'L',
@@ -410,76 +368,28 @@ config.keys = {
         end),
     },
 
-    -- LEADER + - = Vertical split
-    {
-        key = '-',
-        mods = 'LEADER',
-        action = act.SplitVertical({ domain = 'CurrentPaneDomain' }),
-    },
-
-    -- LEADER + \ = Horizontal split
-    {
-        key = '\\',
-        mods = 'LEADER',
-        action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
-    },
-
-    -- ALT + Arrows = Move between panel
+	-- ALT + Arrows = Move between tab
+	{
+		key = 'LeftArrow',
+		mods = 'ALT',
+		action = act.ActivateTabRelative(-1),
+	},
+	{
+		key = 'RightArrow',
+		mods = 'ALT',
+		action = act.ActivateTabRelative(1),
+	},
+	
+	-- CTRL + Arrows = Move tab
     {
         key = 'LeftArrow',
-        mods = 'ALT',
-        action = act.ActivatePaneDirection('Left'),
+        mods = 'CTRL',
+        action = act.MoveTabRelative(-1),
     },
     {
         key = 'RightArrow',
-        mods = 'ALT',
-        action = act.ActivatePaneDirection('Right'),
-    },
-    {
-        key = 'UpArrow',
-        mods = 'ALT',
-        action = act.ActivatePaneDirection('Up'),
-    },
-    {
-        key = 'DownArrow',
-        mods = 'ALT',
-        action = act.ActivatePaneDirection('Down'),
-    },
-
-    -- LEADER + Arrows = Adjust panel size (5)
-    {
-        key = 'LeftArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Left', 5 }),
-    },
-    {
-        key = 'RightArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Right', 5 }),
-    },
-    {
-        key = 'UpArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Up', 5 }),
-    },
-    {
-        key = 'DownArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Down', 5 }),
-    },
-
-    -- LEADER + W = Close current panel
-    {
-        key = 'W',
-        mods = 'LEADER',
-        action = act.CloseCurrentPane({ confirm = true })
-    },
-
-    -- LEADER + Z = Toggle panel zoom
-    {
-        key = 'Z',
-        mods = 'LEADER',
-        action = act.TogglePaneZoomState,
+        mods = 'CTRL',
+        action = act.MoveTabRelative(1),
     },
 
     -- LEADER + [ = Toggle copy mode
@@ -513,18 +423,6 @@ config.keys = {
         key = 'V',
         mods = 'CTRL|SHIFT',
         action = act.PasteFrom('Clipboard'),
-    },
-
-    -- CTRL (+ SHIFT) + Tab = Move Tab
-    {
-        key = 'Tab',
-        mods = 'CTRL',
-        action = act.MoveTabRelative(1),
-    },
-    {
-        key = 'Tab',
-        mods = 'CTRL|SHIFT',
-        action = act.MoveTabRelative(-1),
     },
 
     -- CTRL + SHIFT + P = Command palette
