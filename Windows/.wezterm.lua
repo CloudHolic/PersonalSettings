@@ -18,21 +18,11 @@ local launch_items = {
         label = '  Host',
         display = '3.   Host SSH',
         args = { 'wsl.exe', '-d', 'Arch', '--', 'ssh', 'cloudholic@100.77.188.38' }
-    },    
+    },
     {
         label = '  PowerShell7.6',
         display = '4.   PowerShell 7.6',
         args = { 'pwsh.exe' }
-    },
-    {
-        label = '  Kali',
-        display = '5.   Kali Linux',
-        args = { 'wsl.exe', '-d', 'kali-linux', '--cd', '~'}
-    },
-    {
-        label = '  Win-KeX',
-        display = '6.   Kali Linux (Win-KeX)',
-        args = { 'wsl.exe', '-d', 'kali-linux', '--cd', '~', 'kex', '--wtstart', '-s'}
     }
 }
 local default_prog_label = launch_items[1].label
@@ -51,7 +41,7 @@ config.font_size = 11.0
 -- Opacity & Backdrop
 config.window_background_opacity = 0.85
 config.win32_system_backdrop = 'Acrylic'
-config.color_scheme = 'OneDark (base16)'
+config.color_scheme = 'Catppuccin Macchiato'
 
 -- Styling
 config.use_fancy_tab_bar = true
@@ -311,28 +301,6 @@ config.keys = {
         mods = 'LEADER',
         action = wezterm.action_callback(function(window, pane)
             local item = launch_items[4]
-            local tab, new_pane, new_window = window:mux_window():spawn_tab({
-                args = item.args
-            })
-            tab_labels[tab:tab_id()] = item.label
-        end),
-    },    
-    {
-        key = '5',
-        mods = 'LEADER',
-        action = wezterm.action_callback(function(window, pane)
-            local item = launch_items[5]
-            local tab, new_pane, new_window = window:mux_window():spawn_tab({
-                args = item.args
-            })
-            tab_labels[tab:tab_id()] = item.label
-        end),
-    },
-    {
-        key = '6',
-        mods = 'LEADER',
-        action = wezterm.action_callback(function(window, pane)
-            local item = launch_items[6]
             local tab, new_pane, new_window = window:mux_window():spawn_tab({
                 args = item.args
             })

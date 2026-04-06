@@ -11,11 +11,11 @@ disabled = true
 
 [hostname]
 ssh_only = true
-style = "green bold"
+style = "#a6da95 bold"
 format = "[$user@$hostname]($style) "
 
 [directory]
-style = "cyan bold"
+style = "#8bd5ca bold"
 format = "[$path]($style) "
 truncation_length = 0
 truncate_to_repo = false
@@ -26,11 +26,11 @@ home_symbol = "~"
 
 [git_branch]
 symbol = " "
-style = "purple bold"
+style = "#c6a0f6 bold"
 format = "[$symbol$branch]($style)"
 
 [git_status]
-style = "red bold"
+style = "#ed8796 bold"
 format = '([$all_status$ahead_behind]($style)) '
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -42,9 +42,9 @@ deleted = "✘${count}"
 
 [cmd_duration]
 min_time = 2000
-style = "yellow bold"
+style = "#eed49f bold"
 format = "[⏱ $duration]($style) "
 
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
+success_symbol = "[❯](#a6da95 bold)"
+error_symbol = "[❯](#ed8796 bold)"

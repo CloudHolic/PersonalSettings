@@ -86,3 +86,6 @@ $env.config.shell_integration = {
     osc633: true
     reset_application_mode: true
 }
+
+# Remove Welcome
+$env.config.show_banner = false

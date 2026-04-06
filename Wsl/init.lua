@@ -181,13 +181,14 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
 -- Lazy Setup
 require("lazy").setup({
     {
-        "navarasu/onedark.nvim",
+        "catppuccin.nvim",
+        name = "catppuccin",
         priority = 1000,
         config = function ()
-            require('onedark').setup {
-              style = 'dark'
+            require('catppuccin').setup {
+              flavour = "macchiato"
             }
-            require('onedark').load()
+            vim.cmd.colorscheme "catppuccin"
         end,
     },
     {
