@@ -5,9 +5,14 @@ local config = wezterm.config_builder()
 -- Launcher Items
 local launch_items = {
     {
-        label = 'Zsh',
-        display = '1. Zsh',
+        label = '  Zsh',
+        display = '1.   Zsh',
         args = { '/bin/zsh', '-l' }
+    },
+    {
+        label = '  Host',
+        display = '2.   Host SSH',
+        args = { 'ssh', 'cloudholic@100.77.188.38'}
     }
 }
 local default_prog_label = launch_items[1].label
@@ -18,19 +23,19 @@ config.initial_rows = 40
 
 -- Fonts
 config.font = wezterm.font_with_fallback({
-    'D2CodingLigature Nerd Font',
-    'D2Coding',
+    'ComicShannsMono Nerd Font',
+    'Comic Mono',
 })
 config.font_size = 13.0
 
 -- Opacity & Backdrop
 config.window_background_opacity = 0.85
 config.macos_window_background_blur = 20
-config.color_scheme = 'MaterialDarker'
+config.color_scheme = 'Catppuccin Macchiato'
 
 -- Styling
 config.use_fancy_tab_bar = true
-config.tab_max_width = 40
+config.tab_max_width = 60
 config.tab_bar_at_bottom = false
 config.hide_tab_bar_if_only_one_tab = false
 
@@ -38,7 +43,7 @@ config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.native_macos_fullscreen_mode = true
 
 config.window_frame = {
-    font = wezterm.font({ family = 'D2CodingLigature Nerd Font', weight = 'Bold' }),
+    font = wezterm.font({ family = 'ComicShannsMono Nerd Font', weight = 'Bold' }),
     font_size = 14.0,
     active_titlebar_bg = '#2e3440',
     inactive_titlebar_bg = '#3b4252'
@@ -49,13 +54,6 @@ config.window_padding = {
     right = 12,
     top = 12,
     bottom = 12
-}
-
-config.window_padding = {
-    left = 8,
-    right = 8,
-    top = 8,
-    bottom = 8,
 }
 
 config.inactive_pane_hsb = {
@@ -104,6 +102,8 @@ local tab_labels = {}
 local custom_tab_titles = {}
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+    local tab_id = tab.tab_id
+    local index = tab.tab_index + 1
     local title = custom_tab_titles[tab_id] or tab_labels[tab_id] or tab.active_pane.title
 
     if tab.is_active then
@@ -231,7 +231,7 @@ config.keys = {
         action = act.SendKey({ key = '`' }),
     },
 
-    -- LEADER + 1 = Spawn new profile
+    -- LEADER + 1/2 = Spawn each profiles
     {
         key = '1',
         mods = 'LEADER',
@@ -242,49 +242,18 @@ config.keys = {
             })
             tab_labels[tab:tab_id()] = item.label
         end),
-    },    
-
-    -- LEADER + N = New Workspace
+    },
     {
-        key = 'n',
+        key = '2',
         mods = 'LEADER',
         action = wezterm.action_callback(function(window, pane)
-            window:perform_action(
-                act.PromptInputLine({
-                    description = wezterm.format({
-                        { Attribute = { Intensity = 'Bold' } },
-                        { Foreground = { AnsiColor = 'Cyan' } },
-                        { Text = 'New workspace:' },
-                    }),
-                    action = wezterm.action_callback(function(inner_window, inner_pane, line)
-                        if line and line ~= '' then
-                            inner_window:perform_action(
-                                act.SwitchToWorkspace({
-                                    name = line,
-                                }),
-                                inner_pane
-                            )
-                        end
-                    end),
-                }),
-                pane
-            )
+            local item = launch_items[2]
+            local tab, new_pane, new_window = window:mux_window():spawn_tab({
+                args = item.args
+            })
+            tab_labels[tab:tab_id()] = item.label
         end),
-    },
-
-    -- LEADER + S = Workspace
-    {
-        key = 's',
-        mods = 'LEADER',
-        action = wezterm.action_callback(function(window, pane)
-            window:perform_action(
-                act.ShowLauncherArgs({
-                    flags = 'FUZZY|WORKSPACES',
-                }),
-                pane
-            )
-        end),
-    },
+    }, 
 
     -- CTRL + SHIFT + L = Open Launcher Menu
     { 
@@ -314,78 +283,30 @@ config.keys = {
         end),
     },
 
-    -- LEADER + - = Vertical split
-    {
-        key = '-',
-        mods = 'LEADER',
-        action = act.SplitVertical({ domain = 'CurrentPaneDomain' }),
-    },
-
-    -- LEADER + \ = Horizontal split
-    {
-        key = '\\',
-        mods = 'LEADER',
-        action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
-    },
-
-    -- OPT + Arrows = Move between panel
+    -- OPT + Arrows = Move between tab
     {
         key = 'LeftArrow',
         mods = 'OPT',
-        action = act.ActivatePaneDirection('Left'),
+        action = act.ActivateTabRelative(-1),
     },
     {
         key = 'RightArrow',
         mods = 'OPT',
-        action = act.ActivatePaneDirection('Right'),
-    },
-    {
-        key = 'UpArrow',
-        mods = 'OPT',
-        action = act.ActivatePaneDirection('Up'),
-    },
-    {
-        key = 'DownArrow',
-        mods = 'OPT',
-        action = act.ActivatePaneDirection('Down'),
+        action = act.ActivateTabRelative(1),
     },
 
-    -- LEADER + Arrows = Adjust panel size (5)
+    -- CTRL + Arrows = Move tab
     {
         key = 'LeftArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Left', 5 }),
+        mods = 'CTRL',
+        action = act.MoveTabRelative(-1),
     },
     {
-        key = 'RightArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Right', 5 }),
+        key = 'LeftArrow',
+        mods = 'CTRL',
+        action = act.MoveTabRelative(-1),
     },
-    {
-        key = 'UpArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Up', 5 }),
-    },
-    {
-        key = 'DownArrow',
-        mods = 'LEADER',
-        action = act.AdjustPaneSize({ 'Down', 5 }),
-    },
-
-    -- CMD + W = Close current panel
-    {
-        key = 'W',
-        mods = 'CMD',
-        action = act.CloseCurrentPane({ confirm = false })
-    },
-
-    -- LEADER + Z = Toggle panel zoom
-    {
-        key = 'Z',
-        mods = 'LEADER',
-        action = act.TogglePaneZoomState,
-    },
-
+    
     -- LEADER + [ = Toggle copy mode
     {
         key = '[',
@@ -417,18 +338,6 @@ config.keys = {
         key = 'V',
         mods = 'CMD',
         action = act.PasteFrom('Clipboard'),
-    },
-
-    -- CTRL (+ SHIFT) + Tab = Move Tab
-    {
-        key = 'Tab',
-        mods = 'CTRL',
-        action = act.MoveTabRelative(1),
-    },
-    {
-        key = 'Tab',
-        mods = 'CTRL|SHIFT',
-        action = act.MoveTabRelative(-1),
     },
 
     -- CTRL + SHIFT + P = Command palette
