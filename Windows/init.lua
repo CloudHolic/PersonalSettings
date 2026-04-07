@@ -181,7 +181,7 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
 -- Lazy Setup
 require("lazy").setup({
     {
-        "catppuccin.nvim",
+        "catppuccin/nvim",
         name = "catppuccin",
         priority = 1000,
         config = function ()
