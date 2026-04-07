@@ -116,3 +116,6 @@ bindkey '^[d' kill-word                 # Alt+D
 alias sudo='sudo '
 alias svim='sudoedit'
 alias sedit='sudoedit'
+
+# Bat Theme
+export BAT_THEME="Catppuccin Macchiato"

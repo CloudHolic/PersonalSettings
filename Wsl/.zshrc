@@ -118,6 +118,9 @@ alias sudo='sudo '
 alias svim='sudoedit'
 alias sedit='sudoedit'
 
+# Bat Theme
+export BAT_THEME="Catppuccin Macchiato"
+
 # Dev Env
 
 # .NET
